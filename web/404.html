@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Filelink</title>
+  <script>
+    // GitHub Pages Single Page Application router
+    (function() {
+      var segments = window.location.pathname.split('/').filter(Boolean);
+      var repo = segments[0] || 'Filelink-Sync';
+      var room = segments.slice(1).join('/');
+      var search = window.location.search ? window.location.search + (room ? '&room=' + encodeURIComponent(room) : '') : (room ? '?room=' + encodeURIComponent(room) : '');
+      var target = '/' + repo + '/' + search + window.location.hash;
+      window.location.replace(target);
+    })();
+  </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,43 @@
+services:
+  caddy:
+    image: caddy
+    container_name: filelink-caddy
+    ports:
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - filelink:/data
+    depends_on:
+      - filelink
+    restart: unless-stopped
+
+  filelink:
+    image: smartworldarafath/filelink
+    container_name: filelink-app
+    environment:
+      - SECRET_KEY=<SECRET_KEY>
+    depends_on:
+      - coturn
+    restart: unless-stopped
+
+  coturn:
+    image: coturn/coturn:alpine
+    container_name: filelink-coturn
+    command:
+      - --fingerprint
+      - --use-auth-secret
+      - --no-multicast-peers
+      - --no-cli
+      - --realm=filelink.app
+      - --static-auth-secret=<SECRET_KEY>
+      - --listening-port=3478
+      - --min-port=50000
+      - --max-port=50100
+    ports:
+      - "3478:3478/tcp"
+      - "3478:3478/udp"
+      - "50000-50100:50000-50100/udp"
+    restart: unless-stopped
+
+volumes:
+  filelink:
