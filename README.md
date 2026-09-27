@@ -244,8 +244,6 @@ Released under the [MIT License](LICENSE).
 
 ---
 
-## ☕ Support / Buy Me a Coffee & Become a Sponsor
-
 <div align="center">
 
 <a href="SUPPORT.md" target="_blank">
